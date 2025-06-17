@@ -5,15 +5,17 @@ Create a framework for comprehensive testing across multiple levels of user enga
 
 eg. - examine whether there is value in adding contextual information (axis scales, labels, titles), expanding lineups beyond basic perception and grouping.
 
-eg. - combining lineups with direct annotation: establishing whether there is added value in including direct interaction with lineups in online visual inference studies.
+eg. - combining lineups with direct annotation, lineups with talk-aloud protocal
 
 **Augmenting Single-Plot Studies:**
 
-eg. -  combine numerical estimation, and direct annotation.
-
-eg. - examine the over- lap between direct annotation and think-aloud protocols using an online platform. 
-
-eg. - add forced-choice questions to the battery of methods for examining graphics, examining numerical estimation, forced-choice questions, and open-ended responses, with the potential to include or substitute the use of direct annotation or think-aloud methods based on the results of previous experiments.
+eg. -  combine numerical estimation, direct annotation , think-aloud or add forced-choice questions 
 
 
+### Last Week
+- Reading about how cognition works (https://cognitiveresearchjournal.springeropen.com/articles/10.1186/s41235-018-0120-9 )
+- Started drawing congition models
 
+### To do list for the next week
+- Reading more about cognition and perception and drawing models
+- Read about research related to multimodal user testing
