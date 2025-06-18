@@ -1,21 +1,26 @@
 
-Create a framework for comprehensive testing across multiple levels of user engagement - by combining multiple methods of user testing within the same experiment, we can gather information that spans multiple levels of engagement with acceptably small impact on participant cognitive load.
+## Create a framework for comprehensive testing across multiple levels of user engagement  
+
+Current methods of assessing graphics using measures like accuracy or speed, misses how users actually engage with charts. There are different ways to evaluate visualizations based on user tasks, but do not test multiple methods on the same charts. This proposed work aims to fill that gap by testing the same charts using multiple methods with the same participants, data and testing conditions. This helps us get a clearer, more complete understanding of how chart design affects user experience.
+
+By combining multiple methods of user testing within the same experiment, we can gather information that spans multiple levels of engagement with acceptably small impact on participant cognitive load.
+
 
 **Augmentation of statistical lineup:**
 
-eg. - examine whether there is value in adding contextual information (axis scales, labels, titles), expanding lineups beyond basic perception and grouping.
-
 eg. - combining lineups with direct annotation, lineups with talk-aloud protocal
 
-**Augmenting Single-Plot Studies:**
+**Augmenting single-plot studies:**
 
 eg. -  combine numerical estimation, direct annotation , think-aloud or add forced-choice questions 
 
 
-### Last Week
-- Reading about how cognition works (https://cognitiveresearchjournal.springeropen.com/articles/10.1186/s41235-018-0120-9 )
+
+### Last Week 
+- Read reserach papers related to how cognition works in visualization tasks
 - Started drawing congition models
 
+
 ### To do list for the next week
-- Reading more about cognition and perception and drawing models
-- Read about research related to multimodal user testing
+- Continue reading more about cognition and perception and drawing models
+- Read about research related to multi-modal user testing
