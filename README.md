@@ -16,7 +16,7 @@ eg. -  combine numerical estimation, direct annotation , think-aloud or add forc
 
 
 
-### Last Week 
+### Last Week (11 June - 18 June)
 - Read reserach papers related to how cognition works in visualization tasks
 - Started drawing congition models
 
