@@ -1,4 +1,4 @@
-### Cognition Model for Lineups with Direct Annotation
+### Cognition Model for Lineups with Direct Annotation 
 
 
 1.	Visual Input (lineup)
