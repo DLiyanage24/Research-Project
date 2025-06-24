@@ -24,3 +24,5 @@ eg. -  combine numerical estimation, direct annotation , think-aloud or add forc
 ### To do list for the next week
 - Continue reading more about cognition and perception and drawing models
 - Read about research related to multi-modal user testing
+
+## Last week ( 18 June - 25 June)
