@@ -14,15 +14,16 @@ eg. - combine numerical estimation, direct annotation , think-aloud or add force
 
 ### Last week ( 19 June - 25 June)
 
--   Explored cognitive processes involved in graph comprehension. Read and summarized multiple research papers, including:
+-   Explored cognitive processes involved in graph comprehension. Read and summarized research papers, including:
 
     -   Trickett & Trafton (2006) on the role of spatial processing in graph comprehension.
     -   Padilla et al.(2018) on a dual-process cognitive model for decision-making with visualizations, incorporating both fast (Type 1) and deliberative (Type 2) reasoning.
-    -   Robinson et al. (2022) - “You Draw It” validation
+    -   Shah, P., Freedman, E. G., & Vekiri, I. (2005). The Comprehension of Quantitative Information in Graphical Displays.
+    -   Robinson et al. (2022) - You Draw It’: Implementation of Visually Fitted Trends with r2d3
 
 -   Drafted a cognitive model for lineups with direct annotation
 
-    -   Drafted a model outlining how users interpret and annotate statistical lineups, integrating both spatial reasoning pathway and numerical/analytically reasoning pathways.
+    -   Drafted a model outlining how users interpret and annotate statistical lineups, integrating both spatial uncertainity and numerical uncertainty.
 
 ### To do list for the next week
 
