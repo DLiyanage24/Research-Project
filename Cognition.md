@@ -2,7 +2,7 @@
 
 #### 1. Visual Input (lineup)
 
-Stimuli: Participant sees a lineup of similar scatterplots.\
+Stimuli: Participant sees a lineup of similar scatter plots.\
 Goal: Identify the one plot that is statistically most different (e.g., strongest trend).
 
 #### 2. Visual encoding and perception
@@ -27,9 +27,7 @@ Some participant mentally aligns plots, estimates slope visually. Uses spatial w
 
 Some participant mentally estimates slopes or variance. These participants do not rely on visual features alone. Applies domain knowledge and uses verbal working memory and abstract inference. (Padilla et al., 2018; Freedman & Shah, 2002).
 
-Q - Can people use both these paths and make a decision
-(Dual Process Theory) 
-
+Q - Can people incorporate both these paths and make a decision
 
 #### 5. Decision making and Annotation
 
