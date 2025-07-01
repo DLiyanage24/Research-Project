@@ -27,13 +27,13 @@ Some participant mentally aligns plots, estimates slope visually. Uses spatial w
 
 Some participant mentally estimates slopes or variance. These participants do not rely on visual features alone. Applies domain knowledge and uses verbal working memory and abstract inference. (Padilla et al., 2018; Freedman & Shah, 2002).
 
-Q - Can people incorporate both these paths and make a decision
+Q - Can people incorporate both these paths and make a decision?
 
 #### 5. Decision making and Annotation
 
 Participant selects the plot and annotates their reasoning.\
 Participants who use the spatial reasoning path may tend to annotate by marking visual features like circles, arrows. Participants who use the numerical reasoning path may annotate with text labels, descriptive notes.
 
-The nature of their annotation reveals: The strategy they used, the type of uncertainty involved (spatial vs. numerical), the potential source of error propagation.
+The nature of their annotation reveals: the strategy they used, the type of uncertainty involved (spatial vs. numerical), the potential source of error propagation.
 
 (Padilla et al., 2018; Trickett & Trafton, 2006)
