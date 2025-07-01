@@ -12,14 +12,15 @@ eg. - combining lineups with direct annotation, lineups with talk-aloud protocal
 
 eg. - combine numerical estimation, direct annotation , think-aloud or add forced-choice questions
 
-### Last week ( 19 June - 25 June)
+### Last week
 
 -   Explored cognitive processes involved in graph comprehension. Read and summarized research papers, including:
 
     -   Trickett & Trafton (2006) on the role of spatial processing in graph comprehension.
     -   Padilla et al.(2018) on a dual-process cognitive model for decision-making with visualizations, incorporating both fast (Type 1) and deliberative (Type 2) reasoning.
     -   Shah, P., Freedman, E. G., & Vekiri, I. (2005). The Comprehension of Quantitative Information in Graphical Displays.
-    -   Robinson et al. (2022) - You Draw It’: Implementation of Visually Fitted Trends with r2d3
+    -   Robinson et al. (2022) - You Draw It’: Implementation of Visually Fitted Trends with r2d3 
+    
 
 -   Drafted a cognitive model for lineups with direct annotation
 
