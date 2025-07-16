@@ -12,7 +12,7 @@ eg. - combining lineups with direct annotation, lineups with talk-aloud protocol
 
 eg. - combine numerical estimation, direct annotation , think-aloud or add forced-choice questions
 
-### Last week( 9 July - 16 July)
+### Last week( 10 July - 16 July)
 
 -   Read research papers related to cognition and perception in graph comprehension. Read and summarized research papers, including:
 
