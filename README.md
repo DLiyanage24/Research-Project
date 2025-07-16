@@ -29,5 +29,5 @@ eg. - combine numerical estimation, direct annotation , think-aloud or add force
 
 ### To do list for the next week
 
--   Continue reading research papers regarding cognition, user studies and comprehensive testing across multiple levels of user engagement.
+-   Begin exploring interactive data visualization with D3.js
 -   Continue following the R packages book.
