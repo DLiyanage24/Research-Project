@@ -15,15 +15,14 @@ eg. - combine numerical estimation, direct annotation , think-aloud or add force
 ### Last week( 23 July - 30 July)
 
 -   Explored D3 (JavaScript library for creating dynamic, interactive data visualizations in web browsers)
-    -   Followed Chapters 1–8 of Interactive Data Visualization for the Web by Scott Murray.
-    -   Gained a basic understanding of D3 concepts, technology fundamentals including HTML, CSS, JavaScript, DOM, and SVG. 
+    -   Followed Chapters 1–8 of the book ***Interactive Data Visualization for the Web by Scott Murray.***
+    -   Gained a basic understanding of D3 concepts, technology fundamentals including HTML, CSS, JavaScript, DOM, and SVG.
     -   Figured out how to setup D3 and create basic visualizations including setting up a local web server, linking D3 scripts and using browser developer tools to inspect and debug.
-    
 -   Investigated “You Draw It” implementation.
     -   Reviewed Emily's setup for the “You Draw It” implementation.
-    -   Conducted an initial test by simulating data in R, using D3 to render lineup plots, connecting R and JavaScript through the 'r2d3' package with shiny binding.
+    -   Conducted an initial test by simulating sample data in R, using D3 to render lineup plots, connecting R and JavaScript through the 'r2d3' package with shiny binding.
 
 ### To do list for the next week
 
--   Explore how to incorporate interactivity, including user plot selection and annotation features.
--   Continue progressing through the Interactive Data Visualization for the Web book beyond Chapter 8.
+-   Explore how to incorporate interactivity, including tracking the user’s mouse movements and annotation features.
+-   Continue progressing through the ***Interactive Data Visualization for the Web*** book beyond Chapter 8.
