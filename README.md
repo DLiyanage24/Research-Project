@@ -12,17 +12,14 @@ eg. - combining lineups with direct annotation, lineups with talk-aloud protocol
 
 eg. - combine numerical estimation, direct annotation , think-aloud or add forced-choice questions
 
-### Last week( 23 July - 30 July)
+### Last week( 6 Aug - 12 Aug)
 
--   Explored D3 (JavaScript library for creating dynamic, interactive data visualizations in web browsers)
-    -   Followed Chapters 1–8 of the book ***Interactive Data Visualization for the Web by Scott Murray.***
-    -   Gained a basic understanding of D3 concepts, technology fundamentals including HTML, CSS, JavaScript, DOM, and SVG.
-    -   Figured out how to setup D3 and create basic visualizations including setting up a local web server, linking D3 scripts and using browser developer tools to inspect and debug.
--   Investigated “You Draw It” implementation.
-    -   Reviewed Emily's setup for the “You Draw It” implementation.
-    -   Conducted an initial test by simulating sample data in R, using D3 to render lineup plots, connecting R and JavaScript through the 'r2d3' package with shiny binding.
+-   Added user interactions to “You Draw It” Lineup
+    -   Added functionality for highlighting interesting features in the selected plot.
+    -   Implemented circle-based annotation tools: Users can enable a “Highlight Interesting” mode to draw a circular region over key features.
+    -   Added a free-text annotation box below the selected plot to record user explanations for their selection.
+    -   Integrated annotation tools with Shiny so that both the drawn region details (center and radii) and the user’s explanatory text are recorded and stored in CSV files.
 
 ### To do list for the next week
 
--   Explore how to incorporate interactivity, including tracking the user’s mouse movements and annotation features.
--   Continue progressing through the ***Interactive Data Visualization for the Web*** book beyond Chapter 8.
+-   Test and implement additional feature refinements.
