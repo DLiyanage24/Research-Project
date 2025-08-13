@@ -14,7 +14,7 @@ eg. - combine numerical estimation, direct annotation , think-aloud or add force
 
 ### Last week( 6 Aug - 12 Aug)
 
--   Added user interactions to “You Draw It” Lineup
+-   Tested and added user interactions to “You Draw It” Lineup
     -   Added functionality for highlighting interesting features in the selected plot.
     -   Implemented circle-based annotation tools: Users can enable a “Highlight Interesting” mode to draw a circular region over key features.
     -   Added a free-text annotation box below the selected plot to record user explanations for their selection.
