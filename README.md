@@ -14,7 +14,7 @@ eg. - combine numerical estimation, direct annotation , think-aloud or add force
 
 ### Last week( 6 Aug - 12 Aug)
 
--   Tested and added user interactions to “You Draw It” Lineup
+-   Tested adding new functionalities to  “You Draw It” lineup setup, making adjustments to the D3.js code, JavaScript logic, and R Shiny server logic to enable and refine these features.
     -   Added functionality for highlighting interesting features in the selected plot.
     -   Implemented circle-based annotation tools: Users can enable a “Highlight Interesting” mode to draw a circular region over key features.
     -   Added a free-text annotation box below the selected plot to record user explanations for their selection.
