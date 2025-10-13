@@ -7,6 +7,8 @@ library(dplyr)
 library(DBI)
 library(RSQLite)
 library(jsonlite)
+# install.packages("devtools")
+# devtools::install_github("abbey-thomas/speechcollectr")
 library(speechcollectr)
 
 # DB setup
