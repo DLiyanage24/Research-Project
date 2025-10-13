@@ -11,13 +11,12 @@ library(speechcollectr)
 
 # DB setup
 db_path <- file.path(
-  "/Users/dinuwanthiliyanage/Library/CloudStorage/OneDrive-UniversityofNebraska-Lincoln/Project/Combined App",
-  "app_data.sqlite"
+  "data", "app_data.sqlite"
 )
 
 init_db <- function() {
   con <- dbConnect(RSQLite::SQLite(), db_path)
-  
+
   dbExecute(con, "
     CREATE TABLE IF NOT EXISTS recordings (
       id             INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +28,7 @@ init_db <- function() {
       filepath       TEXT    NOT NULL
     )
   ")
-  
+
   dbExecute(con, "
     CREATE TABLE IF NOT EXISTS highlighted_regions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +44,7 @@ init_db <- function() {
       draw_duration_ms   REAL
     )
   ")
-  
+
   dbExecute(con, "
     CREATE TABLE IF NOT EXISTS plot_annotations (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,7 +55,7 @@ init_db <- function() {
       annotation     TEXT
     )
   ")
-  
+
   dbExecute(con, "
     CREATE TABLE IF NOT EXISTS clicks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,7 +68,7 @@ init_db <- function() {
       time_from_start_sec REAL
     )
   ")
-  
+
   dbExecute(con, "
     CREATE TABLE IF NOT EXISTS demographics (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,7 +78,7 @@ init_db <- function() {
       education_level TEXT
     )
   ")
-  
+
   con
 }
 
@@ -100,7 +99,7 @@ generate_lineup_data <- function(a_target = 0.06, sd_null = 0.6, sd_target = 0.5
   n_panels <- 20; n_pts <- 60
   x <- seq(0, 15, length.out = n_pts)
   target_idx <- sample(seq_len(n_panels), 1)
-  
+
   plots <- lapply(seq_len(n_panels), function(i) {
     if (i == target_idx) {
       x0 <- runif(1, 7, 12); m <- runif(1, 0.1, 0.4); b <- runif(1, -3, 3)
@@ -117,23 +116,23 @@ generate_lineup_data <- function(a_target = 0.06, sd_null = 0.6, sd_target = 0.5
 
 `%||%` <- function(a, b) if (!is.null(a)) a else b
 
-# server 
+# server
 server <- function(input, output, session) {
-  
+
   con <- init_db()
   onStop(function() try(dbDisconnect(con), silent = TRUE))
-  
+
   participant_id <- paste0("P-", format(Sys.time(), "%Y%m%d%H%M%S"), "-", substr(session$token, 1, 6))
   session_id     <- paste0("S-", format(Sys.time(), "%Y%m%dT%H%M%S"), "-", substr(session$token, 1, 6))
-  
+
   sessionStart <- reactiveVal(Sys.time())
-  
+
   buf <- reactiveValues(
     lineup  = generate_lineup_data(),
     regions = list()
   )
   rvs <- reactiveValues(trial_n = 0)
-  
+
   # Reser summary tab
   reset_summary_inputs <- function() {
     updateSelectInput(session, "sum_sel1", selected = "-")
@@ -141,18 +140,18 @@ server <- function(input, output, session) {
     updateSelectInput(session, "sum_sel2", selected = "-")
     updateTextAreaInput(session, "sum_why2", value = "")
   }
-  
-  
-  
+
+
+
   # Track last clicked plot for highlight guard
   last_clicked <- reactiveVal(NULL)
-  
+
   # Click ranking (per Highlight session, increments on every click)
   rv_click <- reactiveValues(event_rank = 0)
-  
-  JS_PATH <- "you-draw-it-v2.js"  
-  
-  #Consent to Demographics 
+
+  JS_PATH <- "you-draw-it-v2.js"
+
+  #Consent to Demographics
   observeEvent(input$consent_continue, {
     if (isTRUE(input$consent_ok)) {
       updateTabsetPanel(session, "topnav", selected = "Demographics")
@@ -160,8 +159,8 @@ server <- function(input, output, session) {
       showModal(modalDialog("Please check “I agree” to continue.", easyClose = TRUE))
     }
   })
-  
-  #  Demographics to Lineup 
+
+  #  Demographics to Lineup
   observeEvent(input$demo_continue, {
     demo_row <- tibble(
       participant_id = participant_id,
@@ -172,8 +171,8 @@ server <- function(input, output, session) {
     append_df(con, "demographics", demo_row)
     updateTabsetPanel(session, "topnav", selected = "Lineup")
   })
-  
-  #  Talk Aloud 
+
+  #  Talk Aloud
   observeEvent(input$choose_talk, {
     # Make Talk tab visible and set initial button visibility/status text
     showTab("topnav", "Talk")
@@ -184,7 +183,7 @@ server <- function(input, output, session) {
     shinyjs::hide("goto_highlight")
     output$rec_status <- renderText("")
   })
-  
+
   observeEvent(input$rec_start, {
     # Start a new recording trial and render the lineup in record mode
     rvs$trial_n <- rvs$trial_n + 1
@@ -202,7 +201,7 @@ server <- function(input, output, session) {
       output$rec_status <- renderText(paste("Could not start recorder:", msg))
     }
   })
-  
+
   observeEvent(input$rec_stop, {
     shinyjs::enable("rec_start"); shinyjs::hide("rec_stop")
     output$rec_status <- renderText("Stopping and saving…")
@@ -214,7 +213,7 @@ server <- function(input, output, session) {
       output$rec_status <- renderText(paste("Could not stop/save recorder:", msg))
     }
   })
-  
+
   observeEvent(input$rec_done, {
     wav_path <- normalizePath(as.character(input$rec_done), winslash = "/", mustWork = FALSE)
     if (!nzchar(wav_path) || !file.exists(wav_path)) {
@@ -232,7 +231,7 @@ server <- function(input, output, session) {
     output$rec_status <- renderText("File saved! Thank you.")
     shinyjs::show("goto_highlight")
   })
-  
+
   # Highlight
   observeEvent(input$choose_highlight, {
     # Enter Highlight mode, clear buffers & counters, render lineup with highlight tools
@@ -255,13 +254,13 @@ server <- function(input, output, session) {
       r2d3(data = buf$lineup, script = JS_PATH, options = list(mode = "highlight", annotation = FALSE))
     })
   })
-  
+
   # When user clicks Undo drop the last region for that plot
   observeEvent(input$highlight_cleared, {
     info <- input$highlight_cleared
     if (is.null(info$plotIndex)) return()
     pidx <- as.integer(info$plotIndex)
-    
+
     # buf$regions is a list of 1-row tibbles; remove the last one for this plot
     if (length(buf$regions)) {
       matches <- which(vapply(
@@ -275,22 +274,22 @@ server <- function(input, output, session) {
       }
     }
   }, ignoreInit = TRUE)
-  
-  
-  
-  
 
-  
+
+
+
+
+
   # Log all clicks (select + deselect) with running rank
   observeEvent(input$plot_clicked, {
     pc <- input$plot_clicked
     idx <- if (is.list(pc)) as.integer(pc$plotIndex) else as.integer(pc)
     act <- if (is.list(pc) && !is.null(pc$action)) as.character(pc$action) else "select"
-    
+
     # increment running rank for every click
     rv_click$event_rank <- rv_click$event_rank + 1
     ts_now <- Sys.time()
-    
+
     dbExecute(
       con,
       "INSERT INTO clicks
@@ -301,12 +300,12 @@ server <- function(input, output, session) {
         session_id,
         format(ts_now, "%Y-%m-%d %H:%M:%S"),
         idx,
-        rv_click$event_rank,  
-        act,                  
+        rv_click$event_rank,
+        act,
         as.numeric(difftime(ts_now, sessionStart(), units = 'secs'))
       )
     )
-    
+
     # keep last_clicked only for selects
     if (identical(act, "select")) {
       last_clicked(idx)
@@ -314,8 +313,8 @@ server <- function(input, output, session) {
       last_clicked(NULL)
     }
   }, ignoreInit = TRUE)
-  
-  
+
+
   # Polygons from JS
   observeEvent(input$highlighted_region, {
     ann <- input$highlighted_region
@@ -335,7 +334,7 @@ server <- function(input, output, session) {
       )
     ))
   }, ignoreInit = TRUE)
-  
+
   # enforce highlight the selected plot rule before moving to forward
   observeEvent(input$save_highlight, {
     regions_df <- if (length(buf$regions)) bind_rows(buf$regions) else tibble()
@@ -366,9 +365,9 @@ server <- function(input, output, session) {
       r2d3(data = buf$lineup, script = JS_PATH, options = list(mode = "plain", annotation = FALSE))
     })
   })
-  
-  
-  
+
+
+
   # Summary / Done
   observeEvent(input$choose_summary, {
     showTab("topnav", "Summary")
@@ -378,17 +377,17 @@ server <- function(input, output, session) {
       r2d3(data = buf$lineup, script = JS_PATH, options = list(mode = "plain", annotation = FALSE))
     })
   })
-  
 
-  
+
+
   observeEvent(input$submit_summary, {
     # Normalize "-" into NA
     sel1 <- if (input$sum_sel1 == "-" || is.null(input$sum_sel1)) NA_integer_ else as.integer(input$sum_sel1)
     sel2 <- if (input$sum_sel2 == "-" || is.null(input$sum_sel2)) NA_integer_ else as.integer(input$sum_sel2)
-    
+
     why1 <- trimws(input$sum_why1 %||% "")
     why2 <- trimws(input$sum_why2 %||% "")
-    
+
     #  Selection 1 is mandatory (plot + reason)
     if (is.na(sel1) || !nzchar(why1)) {
       showModal(modalDialog(
@@ -398,7 +397,7 @@ server <- function(input, output, session) {
       ))
       return()
     }
-    
+
     # Selection 2 optional; but if chosen, must give reason
     if (!is.na(sel2) && !nzchar(why2)) {
       showModal(modalDialog(
@@ -408,7 +407,7 @@ server <- function(input, output, session) {
       ))
       return()
     }
-    
+
     # Build rows
     rows <- list(
       tibble(
@@ -419,7 +418,7 @@ server <- function(input, output, session) {
         annotation     = why1
       )
     )
-    
+
     if (!is.na(sel2) && nzchar(why2)) {
       rows <- append(rows, list(tibble(
         participant_id = participant_id,
@@ -429,12 +428,12 @@ server <- function(input, output, session) {
         annotation     = why2
       )))
     }
-    
+
     append_df(con, "plot_annotations", dplyr::bind_rows(rows))
     updateTabsetPanel(session, "topnav", selected = "Done")
   })
 
-  
+
   # Back buttons
   observeEvent(input$talk_back,      { updateTabsetPanel(session, "topnav", selected = "Lineup") })
   observeEvent(input$highlight_back, { updateTabsetPanel(session, "topnav", selected = "Lineup") })
