@@ -11,13 +11,15 @@ library(jsonlite)
 # devtools::install_github("abbey-thomas/speechcollectr")
 library(speechcollectr)
 
-# DB setup
-db_path <- file.path(
-  "data", "app_data.sqlite"
-)
 
+# Paths 
+DATA_DIR <- file.path("data")
+REC_DIR  <- file.path(DATA_DIR, "recordings")
+DB_PATH  <- file.path(DATA_DIR, "app_data.sqlite")
+
+#DB setup
 init_db <- function() {
-  con <- dbConnect(RSQLite::SQLite(), db_path)
+  con <- dbConnect(RSQLite::SQLite(), DB_PATH)
 
   dbExecute(con, "
     CREATE TABLE IF NOT EXISTS recordings (
@@ -135,15 +137,13 @@ server <- function(input, output, session) {
   )
   rvs <- reactiveValues(trial_n = 0)
 
-  # Reser summary tab
+  # Reset summary tab
   reset_summary_inputs <- function() {
     updateSelectInput(session, "sum_sel1", selected = "-")
     updateTextAreaInput(session, "sum_why1", value = "")
     updateSelectInput(session, "sum_sel2", selected = "-")
     updateTextAreaInput(session, "sum_why2", value = "")
   }
-
-
 
   # Track last clicked plot for highlight guard
   last_clicked <- reactiveVal(NULL)
@@ -153,25 +153,13 @@ server <- function(input, output, session) {
 
   JS_PATH <- "you-draw-it-v2.js"
 
-  #Consent to Demographics
+  #Consent to Lineup
   observeEvent(input$consent_continue, {
     if (isTRUE(input$consent_ok)) {
-      updateTabsetPanel(session, "topnav", selected = "Demographics")
+      updateTabsetPanel(session, "topnav", selected = "Lineup")
     } else {
       showModal(modalDialog("Please check “I agree” to continue.", easyClose = TRUE))
     }
-  })
-
-  #  Demographics to Lineup
-  observeEvent(input$demo_continue, {
-    demo_row <- tibble(
-      participant_id = participant_id,
-      session_id     = session_id,
-      age_range      = input$demo_exp %||% NA_character_,
-      education_level= input$education %||% NA_character_
-    )
-    append_df(con, "demographics", demo_row)
-    updateTabsetPanel(session, "topnav", selected = "Lineup")
   })
 
   #  Talk Aloud
@@ -219,10 +207,28 @@ server <- function(input, output, session) {
   observeEvent(input$rec_done, {
     wav_path <- normalizePath(as.character(input$rec_done), winslash = "/", mustWork = FALSE)
     if (!nzchar(wav_path) || !file.exists(wav_path)) {
-      output$rec_status <- renderText("Recorder finished, but no file was found. If you denied mic permission, allow it and try again.")
+      output$rec_status <- renderText("Recorder finished, but no file was found.")
       return()
     }
-    # Log the recording data
+    
+    #  savings recordings to data/recordings folder
+    ts <- format(Sys.time(), "%Y%m%d-%H%M%S")
+    dest_fname <- sprintf("%s_rec_%s_%03d.wav", participant_id, ts, rvs$trial_n)
+    dest_path  <- normalizePath(file.path(REC_DIR, dest_fname), winslash = "/", mustWork = FALSE)
+    
+    # Move the recorded file into the folder
+    if (!file.rename(wav_path, dest_path)) {
+      file.copy(wav_path, dest_path, overwrite = FALSE)
+      unlink(wav_path)
+    }
+    
+    # Verify if the file exists in the destination
+    if (!file.exists(dest_path)) {
+      output$rec_status <- renderText("Saved recording, but could not move it into data/recordings.")
+      return()
+    }
+    
+    # Log the recording data into DB
     saved_at <- format(Sys.time(), "%Y-%m-%d %H:%M:%S%z")
     dbExecute(
       con,
@@ -263,7 +269,7 @@ server <- function(input, output, session) {
     if (is.null(info$plotIndex)) return()
     pidx <- as.integer(info$plotIndex)
 
-    # buf$regions is a list of 1-row tibbles; remove the last one for this plot
+    # remove the last one for this plot
     if (length(buf$regions)) {
       matches <- which(vapply(
         buf$regions,
@@ -276,10 +282,6 @@ server <- function(input, output, session) {
       }
     }
   }, ignoreInit = TRUE)
-
-
-
-
 
 
   # Log all clicks (select + deselect) with running rank
@@ -317,7 +319,7 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
 
-  # Polygons from JS
+  # Highlighted regions from JS
   observeEvent(input$highlighted_region, {
     ann <- input$highlighted_region
     if (is.null(ann) || is.null(ann$selectedPoints)) return()
@@ -370,7 +372,7 @@ server <- function(input, output, session) {
 
 
 
-  # Summary / Done
+  # Text summary
   observeEvent(input$choose_summary, {
     showTab("topnav", "Summary")
     updateTabsetPanel(session, "topnav", selected = "Summary")
@@ -379,8 +381,6 @@ server <- function(input, output, session) {
       r2d3(data = buf$lineup, script = JS_PATH, options = list(mode = "plain", annotation = FALSE))
     })
   })
-
-
 
   observeEvent(input$submit_summary, {
     # Normalize "-" into NA
@@ -432,6 +432,19 @@ server <- function(input, output, session) {
     }
 
     append_df(con, "plot_annotations", dplyr::bind_rows(rows))
+    updateTabsetPanel(session, "topnav", selected = "Demographics")
+  })
+  
+  
+  #  Demographics to Done
+  observeEvent(input$demo_continue, {
+    demo_row <- tibble(
+      participant_id = participant_id,
+      session_id     = session_id,
+      age_range      = input$demo_exp %||% NA_character_,
+      education_level= input$education %||% NA_character_
+    )
+    append_df(con, "demographics", demo_row)
     updateTabsetPanel(session, "topnav", selected = "Done")
   })
 
