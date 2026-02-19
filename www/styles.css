@@ -1,4 +1,4 @@
-/* ---- shared cards ---- */
+/* shared cards*/
 .task-card{
   background:#fff;
   border:1px solid #e5e7eb;
@@ -60,7 +60,7 @@
   border:1px dashed #d1d5db;
 }
 
-/* ---- hero ---- */
+/* hero */
 .hero{
   padding:18px;
   border-radius:14px;
@@ -109,7 +109,7 @@
 }
 
 
-/* ---- mini method cards ---- */
+/*  mini method cards */
 .mini-card{
   border:1px solid #e5e7eb;
   border-radius:14px;
@@ -131,9 +131,6 @@
 }
 
 /* ---- consent page ---- */
-/* ===============================
-   Consent Page Layout
-================================= */
 
 .consent-page {
   max-width: 980px;
@@ -184,7 +181,7 @@
 .demo-page {
   max-width: 600px;
   font-size: 14px;
-  margin: 60px auto;   /* centers horizontally + adds top spacing */
+  margin: 60px auto;   
 }
 
 .demo-page h3 {
@@ -193,7 +190,7 @@
 }
 
 
-/* ---- done page ---- */
+/* done page */
 .done-card{
   text-align:center;
   padding:40px;
